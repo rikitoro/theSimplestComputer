@@ -22,3 +22,17 @@ describe DFARulebook do
     end
   end 
 end
+
+describe DFA do
+  context "with my_rulebook" do
+    describe "#accepting?" do
+      it "return true when the current state is included in the accept states" do |variable|
+        expect(DFA.new(1, [1, 3], my_rulebook).accepting?).to eq true
+      end
+
+      it "return false when the current state is NOT included in the accept states" do |variable|
+        expect(DFA.new(1, [3], my_rulebook).accepting?).to eq false
+      end
+    end
+  end
+end
