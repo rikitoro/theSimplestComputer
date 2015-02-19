@@ -81,3 +81,24 @@ describe DFA do
     end
   end
 end
+
+describe DFADesign do
+  context "with my_rulebook" do
+    context "start state is 1, and accept states are [3]" do
+      it "NOT to accept 'a'" do
+        dfa_design = DFADesign.new(1, [3], my_rulebook)
+        expect(dfa_design).not_to be_accepts('a')
+      end
+
+      it "NOT to accept 'baa'" do
+        dfa_design = DFADesign.new(1, [3], my_rulebook)
+        expect(dfa_design).not_to be_accepts('baa')
+      end
+
+      it "accept 'baba'" do
+        dfa_design = DFADesign.new(1, [3], my_rulebook)
+        expect(dfa_design).to be_accepts('baba')
+      end
+    end
+  end
+end
