@@ -62,8 +62,22 @@ describe DFA do
           dfa.read_character('b')
           expect(dfa).to be_accepting        
         end
-
       end
+    end
+
+    describe "#read_string" do
+      context "dfa with initial state is 1, accect states are [3]" do
+        it "dfa NOT accept ''" do
+          dfa = DFA.new(1, [3], my_rulebook)
+          expect(dfa).not_to be_accepting
+        end
+
+        it "dfa accepts 'baaab'" do
+          dfa = DFA.new(1, [3], my_rulebook)
+          dfa.read_string('baaab')
+          expect(dfa).to be_accepting
+        end
+      end       
     end
   end
 end
