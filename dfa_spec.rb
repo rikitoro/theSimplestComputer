@@ -27,11 +27,42 @@ describe DFA do
   context "with my_rulebook" do
     describe "#accepting?" do
       it "return true when the current state is included in the accept states" do |variable|
-        expect(DFA.new(1, [1, 3], my_rulebook).accepting?).to eq true
+        expect(DFA.new(1, [1, 3], my_rulebook)).to be_accepting
       end
 
       it "return false when the current state is NOT included in the accept states" do |variable|
-        expect(DFA.new(1, [3], my_rulebook).accepting?).to eq false
+        expect(DFA.new(1, [3], my_rulebook)).not_to be_accepting
+      end
+    end
+
+    describe "#read_character" do
+      context "dfa with initial state is 1, accect states are [3]" do
+        it "with no characters, not to be accepting" do
+          dfa = DFA.new(1, [3], my_rulebook)
+          expect(dfa).not_to be_accepting
+        end
+
+        it "after read_character 'b', NOT to be accepting" do
+          dfa = DFA.new(1, [3], my_rulebook)
+          dfa.read_character('b')
+          expect(dfa).not_to be_accepting        
+        end
+
+        it "after read_character 'b', 'a', 'a', 'a', NOT to be accepting" do
+          dfa = DFA.new(1, [3], my_rulebook)
+          dfa.read_character('b')
+          3.times { dfa.read_character('a') }
+          expect(dfa).not_to be_accepting        
+        end
+
+        it "after read_character 'b', 'a', 'a', 'a', 'b', to be accepting" do
+          dfa = DFA.new(1, [3], my_rulebook)
+          dfa.read_character('b')
+          3.times { dfa.read_character('a') }
+          dfa.read_character('b')
+          expect(dfa).to be_accepting        
+        end
+
       end
     end
   end
