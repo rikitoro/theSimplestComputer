@@ -1,6 +1,3 @@
-# require_relative 'fa_rule'
-
-
 class DFARulebook < Struct.new(:rules)
   def next_state(state, character)
     rule_for(state, character).follow
