@@ -88,9 +88,26 @@ describe NFA do
         end        
       end       
     end
-
   end
+end
 
+describe NFADesign do
+  context "with my_rulebook" do
+    context "start state is 1, and accept states are {4}" do
+      it "NOT to accept 'bbabb'" do
+        nfa_design = NFADesign.new(1, [4], my_rulebook)
+        expect(nfa_design).not_to be_accepts('bbabb')
+      end
 
+      it "accept 'bbbbb'" do
+        nfa_design = NFADesign.new(1, [3], my_rulebook)
+        expect(nfa_design).to be_accepts('bbbbb')
+      end
 
+      it "accept 'bab'" do
+        nfa_design = NFADesign.new(1, [4], my_rulebook)
+        expect(nfa_design).to be_accepts('bab')
+      end
+    end
+  end
 end
