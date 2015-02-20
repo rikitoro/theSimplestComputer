@@ -13,3 +13,9 @@ class NFARulebook < Struct.new(:rules)
     rules.select { |rule| rule.applies_to?(state, character)}
   end
 end
+
+class NFA < Struct.new(:current_states, :accept_states, :rulebook)
+  def accepting?
+    (current_states & accept_states).any?    
+  end
+end

@@ -25,3 +25,16 @@ describe NFARulebook do
 
   end 
 end
+
+describe NFA do
+  context "with my_rulebook" do
+    it "when any current states are NOT included in accept states, NOT to be accepting" do |variable|
+      expect(NFA.new(Set[1], [4], my_rulebook)).not_to be_accepting
+    end
+
+    it "when sme current states are NOT included in accept states, NOT to be accepting" do |variable|
+      expect(NFA.new(Set[1, 2, 4], [4], my_rulebook)).to be_accepting
+    end
+
+  end
+end
