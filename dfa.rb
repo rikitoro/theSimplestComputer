@@ -1,17 +1,3 @@
-class FARule < Struct.new(:state, :character, :next_state)
-  def applies_to?(state, character)
-    self.state == state && self.character == character
-  end
-  
-  def follow
-    next_state
-  end
-
-  def inspect
-    "#<FARule #{state.inspect} --#{character.inspect}--> #{next_state.inspect}>"
-  end
-end
-
 class DFARulebook < Struct.new(:rules)
   def next_state(state, character)
     rule_for(state, character).follow
