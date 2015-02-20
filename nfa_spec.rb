@@ -28,13 +28,69 @@ end
 
 describe NFA do
   context "with my_rulebook" do
-    it "when any current states are NOT included in accept states, NOT to be accepting" do |variable|
-      expect(NFA.new(Set[1], [4], my_rulebook)).not_to be_accepting
+    describe "#accepting?" do
+      it "when any current states are NOT included in accept states, NOT to be accepting" do |variable|
+        expect(NFA.new(Set[1], [4], my_rulebook)).not_to be_accepting
+      end
+
+      it "when sme current states are NOT included in accept states, NOT to be accepting" do |variable|
+        expect(NFA.new(Set[1, 2, 4], [4], my_rulebook)).to be_accepting
+      end      
     end
 
-    it "when sme current states are NOT included in accept states, NOT to be accepting" do |variable|
-      expect(NFA.new(Set[1, 2, 4], [4], my_rulebook)).to be_accepting
+    describe "#read_character" do
+      context "a set of initial states is {1}, accect states is {4}" do
+        it "with no characters, not to be accepting" do
+          nfa = NFA.new(Set[1], [4], my_rulebook)
+          expect(nfa).not_to be_accepting
+        end
+
+        it "after read_character 'b', NOT to be accepting" do
+          nfa = NFA.new(Set[1], [4], my_rulebook)
+          nfa.read_character('b')
+          expect(nfa).not_to be_accepting        
+        end
+
+        it "after read_character 'b', 'a', NOT to be accepting" do
+          nfa = NFA.new(Set[1], [4], my_rulebook)
+          nfa.read_character('b')
+          nfa.read_character('a')
+          expect(nfa).not_to be_accepting        
+        end
+
+        it "after read_character 'b', 'a', 'b', to be accepting" do
+          nfa = NFA.new(Set[1], [4], my_rulebook)
+          nfa.read_character('b')
+          nfa.read_character('a')
+          nfa.read_character('b')
+          expect(nfa).to be_accepting        
+        end
+      end
+    end
+
+    describe "#read_string" do
+      context "a set of initial states is {1}, accect states is {4}" do
+        it "NOT accept ''" do
+          nfa = NFA.new(Set[1], [4], my_rulebook)
+          expect(nfa).not_to be_accepting
+        end
+
+        it "NOT accept 'aabb'" do
+          nfa = NFA.new(Set[1], [4], my_rulebook)
+          nfa.read_string('aabb')
+          expect(nfa).not_to be_accepting
+        end
+
+        it "accept 'bbbbba'" do
+          nfa = NFA.new(Set[1], [4], my_rulebook)
+          nfa.read_string('bbbbba')
+          expect(nfa).to be_accepting
+        end        
+      end       
     end
 
   end
+
+
+
 end
