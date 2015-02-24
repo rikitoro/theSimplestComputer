@@ -24,3 +24,27 @@ describe NFARulebook do
     end    
   end
 end
+
+describe NFADesign do
+  context "with my_rulebook, start state: 1, accept_states: {2, 4}" do
+    before do
+      @nfa_design = NFADesign.new(1, [2, 4], my_rulebook)
+    end
+
+    it "accpects 'aa'" do
+      expect(@nfa_design).to be_accepts 'aa'
+    end
+
+    it "accpects 'aaa'" do
+      expect(@nfa_design).to be_accepts 'aaa'
+    end
+
+    it "accpects 'aaaaaa'" do
+      expect(@nfa_design).to be_accepts 'aaaaaa'
+    end
+
+    it "rejects 'aaaaa'" do
+      expect(@nfa_design).not_to be_accepts 'aaaaa'
+    end    
+  end
+end
