@@ -12,9 +12,20 @@ class NFARulebook < Struct.new(:rules)
   def rules_for(state, character)
     rules.select { |rule| rule.applies_to?(state, character)}
   end
+
+  def follow_free_moves(states)
+    more_states = next_states(states, nil)
+
+    if more_states.subset?(states)
+      states
+    else
+      follow_free_moves(states + more_states)
+    end  
+  end
 end
 
 class NFA < Struct.new(:current_states, :accept_states, :rulebook)
+
   def accepting?
     (current_states & accept_states).any?    
   end
