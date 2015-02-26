@@ -135,5 +135,9 @@ describe "#matches?" do
     it "rejects 'c'" do
       expect(@pattern).not_to be_matches 'c'
     end
+
+    it "rejects 'ab'" do
+      expect(@pattern).not_to be_matches 'ab'
+    end
   end
 end
