@@ -119,5 +119,21 @@ describe "#matches?" do
     end
   end
 
+  context "/a|b/" do
+    before do
+      @pattern = Choose.new(Literal.new('a'), Literal.new('b'))
+    end
 
+    it "accepts 'a'" do
+      expect(@pattern).to be_matches 'a'
+    end
+
+    it "accepts 'b'" do
+      expect(@pattern).to be_matches 'b'
+    end
+
+    it "rejects 'c'" do
+      expect(@pattern).not_to be_matches 'c'
+    end
+  end
 end
