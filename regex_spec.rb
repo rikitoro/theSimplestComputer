@@ -80,4 +80,44 @@ describe "#matches?" do
     expect(Literal.new('a')).not_to be_matches 'aa'
   end
 
+  context "/ab/" do
+    before do
+      @pattern = Concatenate.new(Literal.new('a'), Literal.new('b'))
+    end
+
+    it "rejects 'a'" do
+      expect(@pattern).not_to be_matches 'a'
+    end
+
+    it "accepts 'ab'" do
+      expect(@pattern).to be_matches 'ab'
+    end
+
+    it "rejects 'abc'" do
+      expect(@pattern).not_to be_matches 'abc'
+    end
+  end
+
+  context "/abc/" do
+    before do
+      @pattern = Concatenate.new(
+        Literal.new('a'),
+        Concatenate.new(Literal.new('b'), Literal.new('c'))
+        )
+    end
+
+    it "rejects 'a'" do
+      expect(@pattern).not_to be_matches 'a'
+    end
+
+    it "rejects 'ab'" do
+      expect(@pattern).not_to be_matches 'ab'
+    end
+
+    it "accepts 'abc'" do
+      expect(@pattern).to be_matches 'abc'
+    end
+  end
+
+
 end
