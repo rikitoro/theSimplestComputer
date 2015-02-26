@@ -53,5 +53,31 @@ describe "#to_nfa_design" do
       expect(@nfa_design).not_to be_accepts 'aa'
     end
   end
+end
+
+describe "#matches?" do
+  it "Empty matches ''" do
+    expect(Empty.new).to be_matches ''
+  end
+
+  it "Empty does NOT match 'a'" do
+    expect(Empty.new).not_to be_matches 'a'
+  end
+
+  it "Literal 'a' matches 'a'" do
+    expect(Literal.new('a')).to be_matches 'a'
+  end
+
+  it "Literal 'a' does NOT match ''" do
+    expect(Literal.new('a')).not_to be_matches ''
+  end
+
+  it "Literal 'a' does NOT matches 'b'" do
+    expect(Literal.new('a')).not_to be_matches 'b'
+  end
+
+  it "Literal 'a' does NOT matches 'aa'" do
+    expect(Literal.new('a')).not_to be_matches 'aa'
+  end
 
 end
