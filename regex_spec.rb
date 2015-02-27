@@ -32,7 +32,7 @@ describe "#to_nfa_design" do
     end
   end
 
-    describe "for Literal of 'a'" do
+  describe "for Literal of 'a'" do
     before do
       @nfa_design = Literal.new('a').to_nfa_design 
     end
@@ -140,4 +140,69 @@ describe "#matches?" do
       expect(@pattern).not_to be_matches 'ab'
     end
   end
+
+  context "/a*/" do
+    before do
+      @pattern = Repeat.new(Literal.new('a'))      
+    end
+
+    it "accepts ''" do
+      expect(@pattern).to be_matches ''
+    end
+
+    it "accepts 'a'" do
+      expect(@pattern).to be_matches 'a'
+    end
+
+    it "accepts 'aaaa'" do
+      expect(@pattern).to be_matches 'aaaa'
+    end
+
+    it "rejects 'b'" do
+      expect(@pattern).not_to be_matches 'b'
+    end
+  end
+
+  context "/(a(|b))*/" do
+    before do
+      @pattern = 
+        Repeat.new(
+          Concatenate.new(
+            Literal.new('a'),
+            Choose.new(Empty.new, Literal.new('b'))
+          )
+        )
+    end
+
+    it "accepts ''" do
+      expect(@pattern).to be_matches ''
+    end
+
+    it "accepts 'a'" do
+      expect(@pattern).to be_matches 'a'
+    end
+
+    it "accepts 'ab'" do
+      expect(@pattern).to be_matches 'ab'
+    end
+
+    it "accepts 'aba'" do
+      expect(@pattern).to be_matches 'aba'
+    end
+
+    it "accepts 'abab'" do
+      expect(@pattern).to be_matches 'abab'
+    end
+
+    it "accepts 'abaab'" do
+      expect(@pattern).to be_matches 'abaab'
+    end
+
+    it "rejects 'abba'" do
+      expect(@pattern).not_to be_matches 'abba'
+    end
+
+
+  end
+
 end
