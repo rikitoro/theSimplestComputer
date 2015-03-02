@@ -44,5 +44,24 @@ describe NFASimulation do
         expect(@simulation.next_state(Set[1, 2, 3], 'b')).to eq Set[1, 2, 3]         
       end
     end    
+
+    describe "#to_dfa_design" do
+      before do
+        simulation = NFASimulation.new(nfa_design)
+        @dfa_design = simulation.to_dfa_design
+      end
+
+      it "Not accept 'aaa'" do
+        expect(@dfa_design).not_to be_accepts 'aaa'
+      end
+
+      it "accepts 'aab'" do
+        expect(@dfa_design).to be_accepts 'aab'
+      end
+
+      it "accepts 'bbbabb'" do
+        expect(@dfa_design).to be_accepts 'bbbabb'
+      end
+    end
   end
 end
