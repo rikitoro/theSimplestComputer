@@ -6,8 +6,19 @@ class DPDARulebook < Struct.new(:rules)
   def rule_for(configulation, character)
     rules.detect { |rule| rule.applies_to?(configulation, character) }
   end
-end
 
+  def appliles_to?(configulation, character)
+    !rule_for(configulation, character).nil?
+  end
+
+  def follow_free_moves(configulation)
+    if appliles_to?(configulation, nil)
+      follow_free_moves(next_configulation(configulation, nil))      
+    else
+      configulation
+    end
+  end
+end
 
 class DPDA < Struct.new(:current_configulation, :accept_states, :rulebook)
   def accepting?
