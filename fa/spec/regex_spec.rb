@@ -1,5 +1,5 @@
 require 'rspec'
-require_relative './regex'
+require_relative '../regex'
 
 describe "regex" do
   before do

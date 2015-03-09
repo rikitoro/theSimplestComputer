@@ -1,6 +1,6 @@
 require 'rspec'
-require_relative 'dfa'
-require_relative 'fa_rule'
+require_relative '../dfa'
+require_relative '../fa_rule'
 
 my_rulebook = DFARulebook.new([
  FARule.new(1, 'a', 2), FARule.new(1, 'b', 1),

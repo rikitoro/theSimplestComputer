@@ -1,6 +1,6 @@
 require 'rspec'
 require 'treetop'
-require_relative 'regex'
+require_relative '../regex'
 
 Treetop.load('pattern')
 

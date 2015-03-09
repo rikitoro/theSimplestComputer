@@ -1,7 +1,7 @@
 require 'rspec'
 
-require_relative 'nfa'
-require_relative 'fa_rule'
+require_relative '../nfa'
+require_relative '../fa_rule'
 
 rulebook = NFARulebook.new([
   FARule.new(1, 'a', 1), FARule.new(1, 'a', 2), FARule.new(1, nil, 2),
