@@ -4,12 +4,18 @@ require_relative '../stack'
 
 describe PDARule do
   Given(:rule) { PDARule.new(1, '(', 2, '$', ['b', '$']) }
-  
-  When(:configulation1) { PDAConfigulation.new(1, Stack.new(['$'])) }
-  Then { rule.applies_to?(configulation1, '(') == true }
-  Then { rule.applies_to?(configulation1, ')') == false }
+  Given(:configulation1) { PDAConfigulation.new(1, Stack.new(['$'])) }
+  Given(:configulation2) { PDAConfigulation.new(1, Stack.new(['b', '$'])) }
+  describe "#applies_to?" do
+    Then { rule.applies_to?(configulation1, '(') == true }
+    Then { rule.applies_to?(configulation1, ')') == false }
+    Then { rule.applies_to?(configulation2, '(') == false }    
+  end
 
-  When(:configulation2) { PDAConfigulation.new(1, Stack.new(['b', '$'])) }
-  Then { rule.applies_to?(configulation2, '(') == false }
-  
+  describe "#follow" do
+    When(:next_configulation) { rule.follow(configulation1) } 
+    Then { next_configulation.stack.top == 'b' } 
+    Then { next_configulation.stack.pop.top == '$' }  
+  end
+
 end
