@@ -1,0 +1,19 @@
+require 'rspec/given'
+require_relative '../fa_rule'
+require_relative '../nfa'
+
+describe NFA do
+  Given(:rulebook) { NFARulebook.new([
+    FARule.new(0, '(', 1), FARule.new(1, ')', 0),
+    FARule.new(1, '(', 2), FARule.new(2, ')', 1),
+    FARule.new(2, '(', 3), FARule.new(3, ')', 2),      
+    ]) 
+  }
+  Given(:nfa_design) { NFADesign.new(0, [0], rulebook) }
+
+  Then { nfa_design.accepts?('(()') == false }
+  Then { nfa_design.accepts?('())') == false }
+  Then { nfa_design.accepts?('(())') == true }
+  Then { nfa_design.accepts?('(()(()()))') == true}
+  Then { nfa_design.accepts?('(((())))') == false}
+end
