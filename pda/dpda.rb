@@ -21,6 +21,10 @@ class DPDARulebook < Struct.new(:rules)
 end
 
 class DPDA < Struct.new(:current_configulation, :accept_states, :rulebook)
+  def current_configulation
+    rulebook.follow_free_moves(super)
+  end
+
   def accepting?
     accept_states.include?(current_configulation.state)
   end
@@ -36,3 +40,4 @@ class DPDA < Struct.new(:current_configulation, :accept_states, :rulebook)
     end
   end
 end
+
