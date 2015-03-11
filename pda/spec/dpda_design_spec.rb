@@ -18,4 +18,6 @@ describe DPDADesign do
   Then { subject.accepts?('(()(()(()()(()()))()') == false }
 
   Then { subject.accepts?('())') == false }
+  Then { subject.accepts?(')())') == false }
+
 end
