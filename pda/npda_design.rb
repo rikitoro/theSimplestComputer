@@ -1,17 +1,18 @@
+require 'set'
+require_relative 'npda'
 require_relative 'stack'
 require_relative 'pda_rule'
-require_relative 'dpda'
 
-class DPDADesign < Struct.new(
+class NPDADesign < Struct.new(
   :start_state, :bottom_character, :accept_states, :rulebook)
   
   def accepts?(string)
-    to_dpda.tap { |dpda| dpda.read_string(string) }.accepting?
+    to_npda.tap { |npda| npda.read_string(string) }.accepting?
   end
 
-  def to_dpda
+  def to_npda
     start_stack = Stack.new([bottom_character])
     start_configuration = PDAConfiguration.new(start_state, start_stack)
-    DPDA.new(start_configuration, accept_states, rulebook)
-  end  
+    NPDA.new(Set[start_configuration], accept_states, rulebook)
+  end
 end
