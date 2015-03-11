@@ -26,6 +26,17 @@ describe NPDA do
   subject(:subject) { NPDA.new(Set[configuration], [3], rulebook) }
 
   context "initial state" do
-    Then { subject.accepting? }
+    Then { subject.accepting? == true }
+  end
+
+  context "after read_string 'abb'" do
+    When { subject.read_string('abb') }
+    Then { subject.accepting? == false }
+  end
+
+  context "after read_string 'abb' and read_character 'a'" do
+    When { subject.read_string('abb') }
+    When { subject.read_character('a') } 
+    Then { subject.accepting? == true }   
   end
 end
