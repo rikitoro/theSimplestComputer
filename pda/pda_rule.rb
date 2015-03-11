@@ -1,8 +1,8 @@
-class PDAConfigulation < Struct.new(:state, :stack)
+class PDAconfiguration < Struct.new(:state, :stack)
   STUCK_STATE = Object.new
 
   def stuck
-    PDAConfigulation.new(STUCK_STATE, stack)
+    PDAconfiguration.new(STUCK_STATE, stack)
   end
   
   def stuck?
@@ -15,18 +15,18 @@ end
 class PDARule < Struct.new(:state, :character, :next_state, 
   :pop_character, :push_characters)
   
-  def applies_to?(configulation, character)
-    self.state == configulation.state &&
-      self.pop_character == configulation.stack.top &&
+  def applies_to?(configuration, character)
+    self.state == configuration.state &&
+      self.pop_character == configuration.stack.top &&
       self.character == character
   end
   
-  def follow(configulation)
-    PDAConfigulation.new(next_state, next_stack(configulation))
+  def follow(configuration)
+    PDAconfiguration.new(next_state, next_stack(configuration))
   end
 
-  def next_stack(configulation)
-    popped_stack = configulation.stack.pop
+  def next_stack(configuration)
+    popped_stack = configuration.stack.pop
 
     push_characters.reverse.inject(popped_stack) { |stack, character|
       stack.push(character)
