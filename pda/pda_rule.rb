@@ -1,8 +1,8 @@
-class PDAconfiguration < Struct.new(:state, :stack)
+class PDAConfiguration < Struct.new(:state, :stack)
   STUCK_STATE = Object.new
 
   def stuck
-    PDAconfiguration.new(STUCK_STATE, stack)
+    PDAConfiguration.new(STUCK_STATE, stack)
   end
   
   def stuck?
@@ -22,7 +22,7 @@ class PDARule < Struct.new(:state, :character, :next_state,
   end
   
   def follow(configuration)
-    PDAconfiguration.new(next_state, next_stack(configuration))
+    PDAConfiguration.new(next_state, next_stack(configuration))
   end
 
   def next_stack(configuration)

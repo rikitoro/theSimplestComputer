@@ -13,7 +13,7 @@ describe DPDARulebook do
       ])
   }
 
-  subject(:subject) { DPDA.new(PDAconfiguration.new(1, Stack.new(['$'])), [1], rulebook) }
+  subject(:subject) { DPDA.new(PDAConfiguration.new(1, Stack.new(['$'])), [1], rulebook) }
 
   context "initial state" do
     Then { subject.accepting? == true }

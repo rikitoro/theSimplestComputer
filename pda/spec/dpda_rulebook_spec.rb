@@ -14,7 +14,7 @@ describe DPDARulebook do
   }
 
   describe "#next_configuration" do
-    Given(:configuration) { PDAconfiguration.new(1, Stack.new(['$'])) }
+    Given(:configuration) { PDAConfiguration.new(1, Stack.new(['$'])) }
 
     When(:first_next_configuration) { rulebook.next_configuration(configuration, '(') }
     Then { first_next_configuration.state == 2 }
@@ -34,7 +34,7 @@ describe DPDARulebook do
   end
 
   describe "#follow_free_moves" do
-    Given(:configuration) { PDAconfiguration.new(2, Stack.new(['$'])) }
+    Given(:configuration) { PDAConfiguration.new(2, Stack.new(['$'])) }
     When(:configuration_by_free) { rulebook.follow_free_moves(configuration) }
     Then { configuration_by_free.state == 1}
     Then { configuration_by_free.stack.top == '$'}    

@@ -11,7 +11,7 @@ class DPDADesign < Struct.new(
 
   def to_dpda
     start_stack = Stack.new([bottom_character])
-    start_configuration = PDAconfiguration.new(start_state, start_stack)
+    start_configuration = PDAConfiguration.new(start_state, start_stack)
     DPDA.new(start_configuration, accept_states, rulebook)
   end  
 end
