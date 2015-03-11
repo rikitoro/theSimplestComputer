@@ -40,4 +40,3 @@ class DPDA < Struct.new(:current_configulation, :accept_states, :rulebook)
     end
   end
 end
-
