@@ -7,12 +7,12 @@ class DPDARulebook < Struct.new(:rules)
     rules.detect { |rule| rule.applies_to?(configulation, character) }
   end
 
-  def appliles_to?(configulation, character)
+  def applies_to?(configulation, character)
     !rule_for(configulation, character).nil?
   end
 
   def follow_free_moves(configulation)
-    if appliles_to?(configulation, nil)
+    if applies_to?(configulation, nil)
       follow_free_moves(next_configulation(configulation, nil))      
     else
       configulation
@@ -30,13 +30,24 @@ class DPDA < Struct.new(:current_configulation, :accept_states, :rulebook)
   end
 
   def read_character(character)
-    self.current_configulation =
-      rulebook.next_configulation(current_configulation, character)
+    self.current_configulation = next_configulation(character)
   end
 
   def read_string(string)
     string.chars.each do |character|
-      read_character(character)
+      read_character(character) unless stuck?
     end
+  end
+
+  def next_configulation(character)
+    if rulebook.applies_to?(current_configulation, character)
+      rulebook.next_configulation(current_configulation, character)
+    else
+      current_configulation.stuck
+    end
+  end
+
+  def stuck?
+    current_configulation.stuck?
   end
 end
